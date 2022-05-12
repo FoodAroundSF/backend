@@ -28,16 +28,12 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.FLOAT,
             comment: '가게 점수 리뷰추가시 점수 갱신'
         },
-        restaurantSpot: {
-            type: DataTypes.INTEGER,
-            comment: '가게 구역1234'
-        },
         restaurantXLng: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.DOUBLE ,
             comment: '가게 위치 x좌표(lng)'
         },
         restaurantYLat: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.DOUBLE ,
             comment: '가게 위치 y좌표(lat)'
         },
         restaurantCategory: {
@@ -51,6 +47,10 @@ module.exports = (sequelize, DataTypes) => {
         updateAt: {
             type: DataTypes.DATE,
             comment: '가게 정보 수정 시간'
+        },
+        restaurantPhoneNum: {
+          type: DataTypes.STRING,
+          comment: '가게 번호'
         },
       },
       {

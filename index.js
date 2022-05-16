@@ -14,6 +14,7 @@ var FormData = require('form-data');
 //라우터들 참조해오기
 var test = require('./router/test')
 var mainList = require('./router/mainList')
+var recommendList = require('./router/recommendList')
 
 //sequelize랑 연결 확인하기
 sequelize
@@ -31,23 +32,18 @@ app.get('/',(req,res)=> {
 })
 
 
-app.get('/tit', (req,res)=>{
-  var form = new FormData();
-  var data = fs.readFileSync('./photo/sector1/롯데리아.jpg')
+app.use(express.static('photo'))
 
-  form.append('part1', data, '롯데리아.jpg');
-  form.append('part2', 'part 2 data');
-  res.setHeader('Content-Type', 'multipart/form-data; boundary='+form._boundary);
-  console.log(form._boundary)
-  // res.setHeader('Content-Type', 'image/jpg');
-    // res.setHeader('Content-Type', 'text/plain');
-  // res.send(data)
-  form.pipe(res);
+
+
+app.get('/tit', (req,res)=>{
+  
 })
 
 //라우터 주소
 app.use('/api/test', test)
 app.use('/api/mainList', mainList)
+app.use('/api/recommendList', recommendList)
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)

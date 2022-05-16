@@ -1,6 +1,5 @@
 const router = require('express').Router()
-const {RestaurantInfo} = require('../database/models/index')
-
+const {RestaurantInfo, RestaurantPhoto} = require('../database/models/index')
 const fs = require('fs')
 
 router.get('/', async(req,res)=>{
@@ -8,19 +7,12 @@ router.get('/', async(req,res)=>{
     const restuarantLists = await RestaurantInfo.findAll()
     const result = []
     for (const restuarantList of restuarantLists){
-        const e = fs.readFile('./photo/sector1/롯데리아.jpg', (error, data)=>{
-            console.log('여기 사람 있어요!')
-            if(error) {
-                console.log(error);
-                return res.status(500).send(error)
-            }
-            const a = JSON.stringify(data)
-            return a
-        })
-        
+        const mainPhoto = await RestaurantPhoto.findOne({where:{restaurant_id : restuarantList.restaurant_id}})
+        console.log(mainPhoto)
+        console.log(mainPhoto.photoRoute)
         result.push({
             restaurantTitle : restuarantList.restaurantTitle,
-            // restaurantMainPhoto : e,
+            restaurantMainPhoto : mainPhoto.photoRoute,
             restaurantTimeOpen : restuarantList.restaurantTimeOpen,
             restaurantTimeClose : restuarantList.restaurantTimeClose,
             restaurantSpot : restuarantList.restaurantSpot,
@@ -30,13 +22,11 @@ router.get('/', async(req,res)=>{
             restaurantCategory : restuarantList.restaurantCategory,
             createAt : restuarantList.createAt,
             updateAt : restuarantList.updateAt,
-            restaurantPhoneNum : restuarantList.restaurantPhoneNum,
-            
+            restaurantPhoneNum : restuarantList.restaurantPhoneNum,  
         })
     }
+    console.log(result.length)
     res.send(result)
 })
-
-
 
 module.exports = router
